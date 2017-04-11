@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<!-- name：指定映射的实体类
+	    table:指定映射到的表名
+	 -->
+    <class name="com.my.entity.Department" table="department">
+           <!-- name：指定Product类中的属性名
+                column:指定为id的字段名 
+                generator:生成策略为本地（默认自动增长）
+           -->
+        <id name="did" column="did">
+            <generator class="native"/>
+        </id>
+        
+        <property name="dname" column="dname" length="20"/>
+        <property name="ddesc" column="ddesc" length="100"/>
+        <!-- 映射关系
+        Set<Employee> employees;
+                一个部门对应多个员工
+                inverse属性表示放弃外键维护权，也就是修改了department不会取消对应employee的外键
+                cascade属性表示级联关系，当部门被删除以后，对应部门的employee也会被删除
+         -->
+       <set name="employees" inverse="true" cascade="delete">
+       <!-- 外键名 -->
+        <key column="dno"></key>
+        <one-to-many class="com.my.entity.Employee" />
+       </set>
+    </class>
+</hibernate-mapping>

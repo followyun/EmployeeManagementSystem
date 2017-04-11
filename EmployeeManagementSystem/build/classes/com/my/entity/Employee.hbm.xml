@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<!-- name：指定映射的实体类
+	    table:指定映射到的表名
+	 -->
+    <class name="com.my.entity.Employee" table="employee">
+        <id name="eid" column="eid">
+            <generator class="native"></generator>
+        </id>
+        <property name="ename" column="enmae" length="20"></property>
+        <property name="enumber" column="enumber" length="20"></property>
+        <property name="gender" column="gender" length="20"></property>
+        <property name="birthday" column="birthday" type="date"></property>
+        <property name="joinDate" column="joinDate" type="date"></property>
+        <property name="username" column="username" length="20"></property>
+        <property name="password" column="password" length="20"></property>
+        
+        <!-- 多对一的关联关系
+            name:属性名
+            column:外键名
+            class:属性对应的类
+         -->
+        <many-to-one name="department" column="dno" class="com.my.entity.Department"/>
+           
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<!-- name：指定映射的实体类
+	    table:指定映射到的表名
+	 -->
+    <class name="com.my.entity.Product" table="product">
+           <!-- name：指定Product类中的属性名
+                column:指定为id的字段名 
+                generator:生成策略为本地（默认自动增长）
+           -->
+        <id name="pid" column="pid">
+            <generator class="native"/>
+        </id>
+        
+        <property name="pname" column="pname" length="20"/>
+        <property name="price" column="price"/>
+    </class>
+</hibernate-mapping>

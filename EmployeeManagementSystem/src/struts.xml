@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC 
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN" 
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+  
+    <package name="employee" namespace="/employeeManager" extends="struts-default">
+    
+     
+     <!-- 自定义拦截器  定义在Action前面-->
+          <interceptors>
+          <!-- 拦截用户是否登陆的拦截器 -->
+            <interceptor name="loginCheck" class="com.my.action.UserLoginInterceptor"></interceptor>
+            
+            <interceptor-stack name="myinterceptor">
+                <interceptor-ref name="loginCheck">
+                <!-- 要使该参数生效，需要拦截器类继承MethodFilterInterceptor类而不是AbstractInterceptor类 -->
+                    <param name="excludeMethods">login</param>
+                </interceptor-ref>
+                <interceptor-ref name="defaultStack"></interceptor-ref>
+            </interceptor-stack>
+          </interceptors>
+    
+        <default-interceptor-ref name="myinterceptor">
+        </default-interceptor-ref>
+        <global-results >
+            <result name="login" type="redirect">/index.jsp</result>
+        </global-results>
+        <!-- 由于是spring注入Action类， class属性填写spring注入时指定的id -->
+       <action name="Employee_*" class="employeeAction" method="{1}">
+       <result name="input" type="redirect">/index.jsp</result>
+       <result name="success" type="redirect">/frame.jsp</result>
+       
+       <result name="findPageEmployees">/frame/listEmployee.jsp</result>
+            <result name="go_add">/frame/addEmployee.jsp</result>
+            <result name="add_success">/frame/listEmployee.jsp</result>
+             <result name="add_failure">/frame/addEmployee.jsp</result>
+             <result name="go_edit">/frame/editEmployee.jsp</result>
+              <result name="update_success" type="redirect">Employee_getEmployees</result>
+             <result name="delete_success" type="redirect">Employee_getEmployees</result>
+              <result name="logout_success" type="redirect">/index.jsp</result>
+             <interceptor-ref name="myinterceptor"/>   
+             
+       </action>
+       
+       <action name="Department_*" class="departmentAction" method="{1}">
+            <result name="findPageDepartments">/frame/listDep.jsp</result>
+            <result name="add_success">/frame/addDepartment.jsp</result>
+             <result name="add_failure">/frame/addDepartment.jsp</result>
+             <result name="go_edit">/frame/editDepartment.jsp</result>
+              <result name="update_success" type="redirect">Department_getDepartments</result>
+             <result name="delete_success" type="redirect">Department_getDepartments</result>
+                         
+       </action> 
+          
+  
+    </package>
+  
+</struts>
